@@ -25,8 +25,28 @@ const findById = (id, callback) =>{
     return callback(error, null)
   }
 }
+function create(skill, callback) {
+  console.log('this is the skill', skill)
+  skill._id = Date.now() % 1000000
+  skill.learned = false
+  // skill.language = skill
+  skills.push(skill)
+  return callback(null, skill)
+}
+function findByIdAndDelete(id, callback) {
+  try {
+    const idx = skills.findIndex(skill => skill._id == parseInt(id))
+    const deletedSkill = skills.splice(idx, 1)
+    if (!deletedSkill.length) throw new Error ('No skill was deleted')
+    return callback(null, deletedSkill[0])
+  } catch(error) {
+    return callback(error, null)
+  }
+}
 
 export{
   find,
-  findById
+  findById,
+  create,
+  findByIdAndDelete
 }
